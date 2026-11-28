@@ -627,7 +627,10 @@ window.__boot(function(){
   /* ----- juguetes con modelo 3D (.glb en la misma carpeta) -----
      Mientras carga se ve la foto; cuando llega el modelo, la reemplaza y se puede girar con el dedo.
      La foto se sigue usando para la imagen de descargar/compartir. */
-  var GLB_TOYS={'Robotín':'robotin.glb?v=7'};   /* cambiar el número cada vez que se actualiza el modelo */
+  /* cambiar el número (?v=) cada vez que se actualiza un modelo.
+     GLB_TURN: cuánto girar el modelo para que quede de frente a la cámara (en grados) */
+  var GLB_TOYS={'Robotín':'robotin.glb?v=7','Monumento al Cóndor':'condor.glb?v=1'};
+  var GLB_TURN={'condor.glb?v=1':90};
   var glbCache={}, glbWait={}, glbFailed={};
   function loadGlb(file,cb){
     if(glbCache[file]){ cb(); return; }
@@ -636,6 +639,7 @@ window.__boot(function(){
     if(glbWait[file].length>1) return;
     new THREE.GLTFLoader().load(file,function(gltf){
       var obj=gltf.scene;
+      if(GLB_TURN[file]){ obj.rotation.y=GLB_TURN[file]*Math.PI/180; obj.updateMatrixWorld(true); }
       var box=new THREE.Box3().setFromObject(obj), sz=new THREE.Vector3(), ce=new THREE.Vector3();
       box.getSize(sz); box.getCenter(ce);
       var k=1.45/Math.max(sz.y,sz.x*0.8,sz.z*0.8);
