@@ -632,7 +632,7 @@ window.__boot(function(){
   var GLB_TOYS={'Robotín':'robotin.glb?v=7','Monumento al Cóndor':'condor.glb?v=2','Monumento':'virgen.glb?v=1','Tranvía':'tranvia.glb?v=1'};
   var GLB_TURN={'condor.glb?v=2':-90,'tranvia.glb?v=1':50};
   /* GLB_TONE: qué tan apagado se ve el color de cada modelo (1 = tal cual; menos = más oscuro). Por defecto 0.82 */
-  var GLB_TONE={'virgen.glb?v=1':0.66};
+  var GLB_TONE={'virgen.glb?v=1':0.66,'tranvia.glb?v=1':0.66};
   var glbCache={}, glbWait={}, glbFailed={};
   function loadGlb(file,cb){
     if(glbCache[file]){ cb(); return; }
