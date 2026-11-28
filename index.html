@@ -627,7 +627,7 @@ window.__boot(function(){
   /* ----- juguetes con modelo 3D (.glb en la misma carpeta) -----
      Mientras carga se ve la foto; cuando llega el modelo, la reemplaza y se puede girar con el dedo.
      La foto se sigue usando para la imagen de descargar/compartir. */
-  var GLB_TOYS={'Robotín':'robotin.glb'};
+  var GLB_TOYS={'Robotín':'robotin.glb?v=7'};   /* cambiar el número cada vez que se actualiza el modelo */
   var glbCache={}, glbWait={}, glbFailed={};
   function loadGlb(file,cb){
     if(glbCache[file]){ cb(); return; }
