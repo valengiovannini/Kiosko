@@ -146,9 +146,11 @@
     'https://unpkg.com/three@0.149.0/build/three.min.js',
     'three.min.js'
   ];
+  /* three r149 ya no trae la versión clásica (examples/js) del cargador de modelos:
+     se usa la de r147, que es compatible */
   var gltfUrls=[
-    'https://cdn.jsdelivr.net/npm/three@0.149.0/examples/js/loaders/GLTFLoader.js',
-    'https://unpkg.com/three@0.149.0/examples/js/loaders/GLTFLoader.js',
+    'https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/loaders/GLTFLoader.js',
+    'https://unpkg.com/three@0.147.0/examples/js/loaders/GLTFLoader.js',
     'GLTFLoader.js'
   ];
   var go=null;
