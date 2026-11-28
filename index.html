@@ -629,10 +629,10 @@ window.__boot(function(){
      La foto se sigue usando para la imagen de descargar/compartir. */
   /* cambiar el número (?v=) cada vez que se actualiza un modelo.
      GLB_TURN: cuánto girar el modelo para que quede de frente a la cámara (en grados) */
-  var GLB_TOYS={'Robotín':'robotin.glb?v=7','Monumento al Cóndor':'condor.glb?v=2','Monumento':'virgen.glb?v=1','Tranvía':'tranvia.glb?v=1','Pasaje San Martín':'pasaje_sm.glb?v=1'};
+  var GLB_TOYS={'Robotín':'robotin.glb?v=7','Monumento al Cóndor':'condor.glb?v=2','Monumento':'virgen.glb?v=1','Tranvía':'tranvia.glb?v=1','Pasaje San Martín':'pasaje_sm.glb?v=1','Portones del Parque':'portones.glb?v=1'};
   var GLB_TURN={'condor.glb?v=2':-90,'tranvia.glb?v=1':50,'pasaje_sm.glb?v=1':-35};
   /* GLB_TONE: qué tan apagado se ve el color de cada modelo (1 = tal cual; menos = más oscuro). Por defecto 0.82 */
-  var GLB_TONE={'virgen.glb?v=1':0.66,'tranvia.glb?v=1':0.66,'pasaje_sm.glb?v=1':0.66};
+  var GLB_TONE={'virgen.glb?v=1':0.66,'tranvia.glb?v=1':0.66,'pasaje_sm.glb?v=1':0.66,'portones.glb?v=1':0.66};
   var glbCache={}, glbWait={}, glbFailed={};
   function loadGlb(file,cb){
     if(glbCache[file]){ cb(); return; }
