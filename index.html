@@ -641,7 +641,18 @@ window.__boot(function(){
       var k=1.45/Math.max(sz.y,sz.x*0.8,sz.z*0.8);
       obj.position.sub(ce).multiplyScalar(k);
       obj.scale.multiplyScalar(k);
-      obj.traverse(function(o){ if(o.isMesh){ o.castShadow=true; } });
+      /* sin sumar luz: se bajan los reflejos del entorno y se apaga un poco el color,
+         para que el modelo no se vea lavado con la luz de la escena */
+      obj.traverse(function(o){
+        if(o.isMesh){
+          o.castShadow=true;
+          [].concat(o.material).forEach(function(mm){
+            if(!mm) return;
+            if('envMapIntensity' in mm) mm.envMapIntensity=0.45;
+            if(mm.color) mm.color.multiplyScalar(0.82);
+          });
+        }
+      });
       var wrap=new THREE.Group(); wrap.add(obj);
       glbCache[file]=wrap;
       glbWait[file].forEach(function(f){ f(); }); glbWait[file]=[];
@@ -686,7 +697,7 @@ window.__boot(function(){
     busy=true; shakeStart=performance.now();
     if(navigator.vibrate){ try{navigator.vibrate([40,40,60]);}catch(e){} }
     setTimeout(function(){
-      shakeStart=0; busy=false; open();
+      waitModelThenOpen(performance.now());
     },720);
   }
   function forced(){
@@ -694,6 +705,22 @@ window.__boot(function(){
     return -1;
   }
   var sessionToy=-1;   /* el juguete se sortea una sola vez por carga de la página */
+
+  /* El juguete se sortea apenas carga la página: si tiene modelo 3D, se empieza a bajar
+     mientras la cápsula se mueve, así al abrirse aparece directo el 3D (sin la foto antes). */
+  sessionToy=forced(); if(sessionToy<0) sessionToy=pick();
+  var sessionGlb=GLB_TOYS[info[sessionToy].name]||null;
+  if(sessionGlb) loadGlb(sessionGlb,function(){});
+  function modelPending(){ return !!(sessionGlb&&!glbCache[sessionGlb]&&!glbFailed[sessionGlb]&&THREE.GLTFLoader); }
+  /* si el modelo todavía no llegó, la cápsula sigue agitándose (hasta 8 s; después abre con la foto) */
+  function waitModelThenOpen(t0){
+    if(modelPending()&&performance.now()-t0<8000){
+      shakeStart=performance.now();
+      setTimeout(function(){ waitModelThenOpen(t0); },720);
+      return;
+    }
+    shakeStart=0; busy=false; open();
+  }
   function open(){
     if(sessionToy<0){ sessionToy=forced(); if(sessionToy<0) sessionToy=pick(); }
     var i=sessionToy;
